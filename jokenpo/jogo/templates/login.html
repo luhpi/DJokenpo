@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block title %}Login{% endblock %}
+
+
+{% block content %}
+<form action="/jogo/index" method="post">
+  {% csrf_token %}
+  
+  {{ user }}
+  <br>
+  <input type="submit" value="Entrar">
+</form>
+{% endblock %}

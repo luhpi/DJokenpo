@@ -1,0 +1,17 @@
+<html>
+<head>
+  <title>{% block title %} This is our game page {% endblock %} </title>
+ </head>
+ <body>
+   <main>
+       {{ header }}
+     {% block content %}
+     <form action method= "post">
+         <input type="submit" name="pedra" value="PEDRA">
+         <input type="submit" name="papel" value="PAPEL">
+         <input type="submit" name="tesoura" value="TESOURA">
+         </form>
+     {% endblock %}
+   </main>
+</body>
+</html>
