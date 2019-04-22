@@ -1,12 +1,15 @@
 <html>
 <head>
-  <title>{% block title %} This is our game page {% endblock %} </title>
+  <title>{% block title %} Perdi {% endblock %} </title>
  </head>
  <body>
    <main>
-       {{ header }}
-     {% block content %}
+       <h2> {{ header1 }} </h2>
+       <h3> {{ header2 }} </h3>
+       <h1><br> {{ header3 }} <br></h1>
+       {% block content %}
      <form action method= "post">
+         {% csrf_token %}
          <input type="submit" name="pedra" value="PEDRA">
          <input type="submit" name="papel" value="PAPEL">
          <input type="submit" name="tesoura" value="TESOURA">

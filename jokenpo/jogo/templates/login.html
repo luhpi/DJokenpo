@@ -4,11 +4,12 @@
 
 
 {% block content %}
-<form action="/jogo/index" method="post">
+<form action  method="post">
   {% csrf_token %}
   
   {{ user }}
   <br>
   <input type="submit" value="Entrar">
 </form>
+{{ result }}
 {% endblock %}

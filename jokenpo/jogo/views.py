@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from forms import UserForm
 from django.template import loader
@@ -18,7 +18,9 @@ plays = {("pedra", "pedra"): "Empate",
          ("papel", "tesoura"): "CP ganhou",
          ("tesoura", "pedra"): "CP ganhou"}
 jogadas = ["pedra", "papel", "tesoura"]
-header = "<h2> Clique na sua jogada </h2>"
+header1 = "Clique na sua jogada"
+header2 = ""
+header3 = ""
 
 
 def index(request):
@@ -26,36 +28,40 @@ def index(request):
     if 'pedra' in request.POST:
         jog1 = "pedra"
         jog2 = random.choice(jogadas)
-        header = "<h2> Você jogou "+jog1
-        header += "<br>CP jogou "+jog2
-        header += "<br>"+plays[(jog1, jog2)]+"</h2>"
-        context = {'header': header}
+        header1 = "\nVocê jogou "+jog1
+        header2 = "\n>CP jogou "+jog2
+        header3 = "\n"+plays[(jog1, jog2)]+"\n"
+        context = {'header1': header1,
+                   'header2': header2,
+                   'header3': header3}
         return HttpResponse(template.render(context, request))
 
     if 'papel' in request.POST:
         jog1 = "papel"
         jog2 = random.choice(jogadas)
-        header = "<h2> Você jogou "+jog1
-        header += "<br>CP jogou "+jog2
-        context = {'header': header}
-        header += "<br>"+plays[(jog1, jog2)]+"</h2>"
+        header1 = "\nVocê jogou "+jog1
+        header2 = "\n>CP jogou "+jog2
+        header3 = "\n"+plays[(jog1, jog2)]+"\n"
+        context = {'header1': header1,
+                   'header2': header2,
+                   'header3': header3}
         return HttpResponse(template.render(context, request))
 
     if 'tesoura' in request.POST:
         jog1 = "tesoura"
         jog2 = random.choice(jogadas)
-        header = "<h2> Você jogou "+jog1
-        header += "<br>CP jogou "+jog2
-        header += "<br>"+plays[(jog1, jog2)]+"</h2>"
-        context = {'header': header}
+        header1 = "\nVocê jogou "+jog1
+        header2 = "\n>CP jogou "+jog2
+        header3 = "\n"+plays[(jog1, jog2)]+"\n"
+        context = {'header1': header1,
+                   'header2': header2,
+                   'header3': header3}
         return HttpResponse(template.render(context, request))
 
     else:
-        header = "<h2>Faça a sua jogada</h2>"
-        import pdb
-        pdb.set_trace()
+        header1 = "\nFaça a sua jogada\n"
         return HttpResponse(template.render(
-            context={'header': header},
+            context={'header1': header1},
             request=request)
         )
 
@@ -64,11 +70,25 @@ def login(request):
     template = loader.get_template('login.html')
     if request.method == 'POST':
         user = UserForm(request.POST)
-        context = {'user': user}
+        context = {'user': user,
+                   'result': ""}
+        print(user)
         if user.is_valid():
-            aux = User.objects.get(usuario=user.usuario)
-            if(aux.senha == user.senha):
+            try:
+                aux = User.objects.get(usuario=user.cleaned_data['user'])
+                if(aux.senha == user.cleaned_data['password']):
+                    return redirect('/jogo/index')
+                else:
+                    result = "Senha incorreta"
+                    context = {'user': user,
+                               'result': result}
+                    return HttpResponse(template.render(context, request))
+            except:
+                result = "Usuario não existe"
+                context = {'user': user,
+                           'result': result}
                 return HttpResponse(template.render(context, request))
+
     else:
         user = UserForm()
     context = {'user': user}
