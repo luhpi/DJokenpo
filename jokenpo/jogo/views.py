@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from forms import UserForm
 from django.template import loader
@@ -24,6 +24,12 @@ header3 = ""
 
 
 def index(request):
+    template = loader.get_template('main.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+
+def anothergame(request):
     template = loader.get_template('main.html')
     if 'pedra' in request.POST:
         jog1 = "pedra"
@@ -83,7 +89,8 @@ def login(request):
                     context = {'user': user,
                                'result': result}
                     return HttpResponse(template.render(context, request))
-            except:
+            except Exception as e:
+                result = e
                 result = "Usuario não existe"
                 context = {'user': user,
                            'result': result}
