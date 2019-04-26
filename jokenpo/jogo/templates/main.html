@@ -6,6 +6,7 @@ body {
   font-family: 'Lato', sans-serif;
   display: flex;
   flex-direction: row;
+  text-align: center;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -18,6 +19,7 @@ input[type=text] {
   box-sizing: border-box;
   border: 2px;
   border-color: #048998;
+  text-align: center;
 }
 
 input[type=password] {
@@ -27,6 +29,7 @@ input[type=password] {
   box-sizing: border-box;
   border: 2px;
   border-color: #048998;
+  text-align: center;
 }
 p {
   max-width: 560px;
@@ -34,6 +37,7 @@ p {
   border-bottom: 1px solid #eee;
   margin-bottom: 30px;
   font-size: 18px;
+  text-align: center;
   line-height: 2;
   color: #222;
 }
@@ -161,10 +165,10 @@ keyframes active {
 </head>
  <body>
    <main>
-       <h2 id="header1"> Faça a sua jogada  </h2>
-       <h3 id="header2">  </h3>
-       <h1 id="header3"><br> <br></h1>
        {% block content %}
+         <h2 id="header1"> Faça a sua jogada  </h2>
+         <h3 id="header2">  </h3>
+         <h1 id="header3"><br> <br></h1>
          <input class="button" type="submit" onclick="jogar('pedra')" name="pedra" value="PEDRA">
          <input class="button" type="submit" onclick="jogar('papel')" name="papel" value="PAPEL">
          <input class="button" type="submit" onclick="jogar('tesoura')" name="tesoura" value="TESOURA">
